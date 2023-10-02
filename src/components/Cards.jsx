@@ -1,5 +1,6 @@
 import "../styles/Cards.scss"
 import PropTypes from "prop-types"
+import { forwardRef } from "react"
 
 Cards.PropTypes = {
     cardsInUse: PropTypes.arrayOf(
@@ -28,40 +29,71 @@ Cards.PropTypes = {
     generateNewCards: PropTypes.func.isRequired,
 }
 
-export default function Cards({ cards, cardsInUse, setCards, incrementCurrentScore, resetGame, updateBestScore, isBestScore, generateNewCards }) {
-   const setCardsClicked = (targetCards, cardToUpdate) => {
-    const updatedCards = targetCards.map((card) => {
-        if (card.id === cardToUpdate.id) {
-            return { ...cardToUpdate, hasClicked: true }
+    const Cards = forwardRef(
+        (
+            {
+                cards,
+                activeCards,
+                setCards,
+                currentScore,
+                generateNewCards,
+                setIsGameLost,
+                setIsGameWon,
+                setCurrentScore,
+                bestScore,
+                setBestScore,
+            },
+            ref
+        ) => {
+
+            const getCardsClicked = (targetCards, cardToUpdate) => {
+                const updatedCards = targetCards.map((card) => {
+                    if (card.id === cardToUpdate.id) return card;
+                    return { ...cardToUpdate, hasClicked: true }
+                })
+                return updatedCards
+               }
+
+            const getNewActiveCards = (targetCards) => {
+                const updatedCards = targetCards.map((card) => {
+                    if (card.isActive) {
+                        return { ...card, isActive: false }
+                    }
+                    return card
+                })
+                return updatedCards
+            }
+
+            const areAllActiveCardsClicked = (targetCards) => {
+                const activeCardsFiltered = targetCards.filter((card) => card.isActive)
+                return activeCardsFiltered.every((card) => card.hasClicked)
+            }
+
+            const areAllCardsClicked = (targetCards) =>
+            targetCards.every((card) => card.hasClicked)
+
+            const handleGameLost = () => {
+                setIsGameLost(true)
+                setCurrentScore(0)
+                if (currentScore > bestSCore) setBestScore(currentScore)
+            }
+
+            const handleGameWon = (updatedCurrentScore) => {
+                setIsGameWon(true)
+                if (updatedCurrentScore > bestScore) setBestScore(updatedCurrentScore)
+            }
+
+            const handleCardClick = (card) => {
+                if (card.hasClicked) {
+                    handleGameLost()
+                    return
+                }
+            }
+
+            const updatedCards = getCardsClicked(getShuffledCards(cards), card)
         }
-        return card
-    })
-    return updatedCards
-   }
-
-   const setAllCardsInUse = (targetCards) => {
-    const updatedCards = targetCards.map((card) => {
-        if (card.isCardInUse) {
-            return { ...card, isCardInUse: false }
-        }
-        return card
-    })
-    return updatedCards
-   }
-
-   const areAllCardsInUseClicked = (targetCards) => {
-    const cardsInUseFiltered = targetCards.filter((card) => card.isCardInUse)
-    return cardsInUseFiltered.every((card) => card.hasClicked)
-   }
-
-   function getShuffledCards(array) {
-    const copy = [...array]
-    for (let i = copy.length - 1; i > 0; i -= 1) {
-        const j = Math.floor(Math.random() * (i + 1))
-        [copy[i], copy[j]] = [copy[j], copy[i]]
-    }
-    return copy
-   }
+    ) {
+   
     return (
         <ul>
                 {cardsInUse.map((card) => (
@@ -108,3 +140,4 @@ export default function Cards({ cards, cardsInUse, setCards, incrementCurrentSco
     )
 }
 
+export default Cards;
