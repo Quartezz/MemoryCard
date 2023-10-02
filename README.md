@@ -10,13 +10,17 @@ Your goal is not to click on a character already clicked once. Good luck summone
 ## Preview
 <img src="./public/preview.png" alt="Preview">
 
+## :wrench: Technologies Used
+- HTML
+- SCSS
+- JavaScript
+- React
+- npm
+- webpack
+- eslint
+- babel
 
 
 # React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Template of the page was created by React + Vite.
