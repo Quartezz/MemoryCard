@@ -1,6 +1,6 @@
 import Cards from "./Cards"
 import { useState } from "react"
-import data from "../data/characters.json"
+import data from "../data/cards.js"
 
 export default function Game() {
     function getShuffledCards(targetCards) {
@@ -15,7 +15,7 @@ export default function Game() {
 
     const { characters } = data;
     const [cards, setCards] = useState(getShuffledCards(characters));
-    
+
     return (
         <div>
             <Cards />

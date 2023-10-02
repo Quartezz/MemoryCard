@@ -1,4 +1,4 @@
-import data from "../data/characters.json";
+import data from "../data/cards.js";
 import "../styles/Cards.scss"
 
 export default function Cards() {
