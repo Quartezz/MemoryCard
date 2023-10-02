@@ -1,12 +1,23 @@
+@font-face {
+    font-family: 'Beaufort';
+    src: url('/fonts/Beaufort/BeaufortforLOL-Bold.woff') format('woff');
+    /* You can specify additional font properties here, like font-weight and font-style. */
+  }
+
 header {
     display: flex;
     width: 100%;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 0 6rem;
-    background-color: rgb(175, 122, 61);
-}
+    background-color: #111;
+    font-family: 'Beaufort', sans-serif;
 
-header img {
-    width: 15rem;
+    img {
+        width: 11rem;
+    }
+
+    h1 {
+        color: #fff;
+    }
 }
