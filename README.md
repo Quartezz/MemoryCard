@@ -8,7 +8,7 @@ A card memory game inspired by characters from the game League of Legends. The g
 Your goal is not to click on a character already clicked once. Good luck summoner!
 
 ## Preview
-<img src="./preview.png" alt="Alternative Text">
+<img src="./public/preview.png" alt="Preview">
 
 
 
