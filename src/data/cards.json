@@ -1,8 +1,8 @@
 {
     "cards": [
-        { "name": "Aatrox", "image": "aatrox.jpg" },
-        { "name": "Master Yi", "image": "master.png" },
-        { "name": "Rengar", "image": "rengar.png" },
-        { "name": "Ziggs", "image": "ziggs.png" }
+        { "name": "Aatrox", "image": "aatrox.jpg", "hasClicked": false, "isCardInUse": false },
+        { "name": "Master Yi", "image": "master.png", "hasClicked": false, "isCardInUse": false  },
+        { "name": "Rengar", "image": "rengar.png", "hasClicked": false, "isCardInUse": false  },
+        { "name": "Ziggs", "image": "ziggs.png", "hasClicked": false, "isCardInUse": false  }
     ]
 }
