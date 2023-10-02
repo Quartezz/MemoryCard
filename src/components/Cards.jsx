@@ -1,6 +1,6 @@
-import "../styles/Cards.scss";
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
+import { getShuffledCards } from "./Generate";
 
 const Cards = forwardRef(
   (
@@ -20,9 +20,10 @@ const Cards = forwardRef(
   ) => {
     const getCardsClicked = (targetCards, cardToUpdate) => {
       const updatedCards = targetCards.map((card) => {
-        if (card.id === cardToUpdate.id) return card;
+        if (card.id !== cardToUpdate.id) return card;
         return { ...cardToUpdate, hasClicked: true };
       });
+
       return updatedCards;
     };
 
@@ -31,8 +32,10 @@ const Cards = forwardRef(
         if (card.isActive) {
           return { ...card, isActive: false };
         }
+
         return card;
       });
+
       return updatedCards;
     };
 
@@ -47,7 +50,7 @@ const Cards = forwardRef(
     const handleGameLost = () => {
       setIsGameLost(true);
       setCurrentScore(0);
-      if (currentScore > bestSCore) setBestScore(currentScore);
+      if (currentScore > bestScore) setBestScore(currentScore);
     };
 
     const handleGameWon = (updatedCurrentScore) => {
@@ -60,22 +63,23 @@ const Cards = forwardRef(
         handleGameLost();
         return;
       }
+
+      const updatedCards = getCardsClicked(getShuffledCards(cards), card);
+
+      if (areAllActiveCardsClicked(updatedCards)) {
+        const newActiveCards = getNewActiveCards(updatedCards);
+        setCards(generateNewCards(newActiveCards, activeCards.length));
+      } else {
+        setCards(updatedCards);
+      }
+      const updatedCurrentScore = currentScore + 1;
+      setCurrentScore(updatedCurrentScore);
+
+      if (areAllCardsClicked(updatedCards)) {
+        handleGameWon(updatedCurrentScore);
+      }
     };
 
-    const updatedCards = getCardsClicked(getShuffledCards(cards), card);
-
-    if (areAllActiveCardsClicked(updatedCards)) {
-      const newActiveCards = getNewActiveCards(updatedCards);
-      setCards(generateNewCards(newActiveCards, activeCards.length));
-    } else {
-      setCards(updatedCards);
-    }
-    const updatedCurrentScore = currentScore + 1;
-    setCurrentScore(updatedCurrentScore);
-
-    if (areAllCardsClicked(updatedCards)) {
-      handleGameWon(updatedCurrentScore);
-    }
     return (
       <ul className="cards-list" ref={ref}>
         {activeCards.map((card) => (
