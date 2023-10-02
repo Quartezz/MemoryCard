@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Beaufort";
+  src: url("/fonts/Beaufort/BeaufortforLOL-Bold.woff") format("woff");
+}
+
+header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 6rem;
+  background-color: #111;
+  font-family: "Beaufort", sans-serif;
+  opacity: 90%;
+
+  img {
+    width: 11rem;
+  }
+
+  .nick {
+    color: white;
+    font-size: 2rem;
+  }
+
+  .github-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    gap: 0.5rem;
+
+    .fa-github {
+      color: white;
+      font-size: 2rem;
+    }
+  }
+
+  h1 {
+    color: #fff;
+  }
+}
+
+@media (max-width: 650px) {
+  header {
+    gap: 10;
+  }
+}

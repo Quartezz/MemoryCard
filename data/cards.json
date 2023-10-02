@@ -1,0 +1,8 @@
+{
+    "cards": [
+        { "name": "Aatrox", "image": "aatrox.jpg", "hasClicked": false, "isCardInUse": false },
+        { "name": "Master Yi", "image": "master.png", "hasClicked": false, "isCardInUse": false  },
+        { "name": "Rengar", "image": "rengar.png", "hasClicked": false, "isCardInUse": false  },
+        { "name": "Ziggs", "image": "ziggs.png", "hasClicked": false, "isCardInUse": false  }
+    ]
+}
