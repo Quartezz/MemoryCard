@@ -1,11 +1,16 @@
+@font-face {
+    font-family: 'BeaufortItalic';
+    src: url('/fonts/Beaufort/BeaufortforLOL-BoldItalic.woff') format('woff');
+  }
+
 .cards-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 2rem;
-    padding: 2rem;
+    gap: 1rem;
+    padding: 1rem;
     list-style: none;
-    }
+    
 
     .cards-list.hide{
         display: none;
@@ -13,14 +18,16 @@
     
 
     .card {
-        display: inline-block;
-        width: 100%;
-        font-size: 1rem;
-        margin: 1rem;
-        max-width: 20rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
         text-decoration: none;
         overflow: hidden;
-        box-shadow: 0 0 3rem -1 rgba(0, 0, 0, 0.5);
+        animation: scale-cards 0.5s;
+        border: none;
+        font-family: 'BeaufortItalic', sans-serif;
+        font-size: 1.5rem;
 
         &:hover {
             transform: scale(1.05);
@@ -43,6 +50,7 @@
             text-overflow: ellipsis;
         }
     }
+}
 
     @keyframes scale-cards {
         0% {
