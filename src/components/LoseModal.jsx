@@ -4,7 +4,9 @@ export default function LoseModal({ isGameLost, setIsGameLost, resetCards }) {
   return (
     <div className={`modal-overlay ${isGameLost ? "active" : ""}`}>
       <div className="modal-content">
-        <h3 className="modal-header">You lost! Better luck next time.</h3>
+        <h3 className="modal-header">
+          You lost! Try again to beat your record!
+        </h3>
         <button
           className="play-again"
           type="button"
