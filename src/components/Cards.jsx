@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import { forwardRef } from "react";
 import { getShuffledCards } from "./Generate";
+import "../styles/Cards.scss";
 
 const Cards = forwardRef(
   (
