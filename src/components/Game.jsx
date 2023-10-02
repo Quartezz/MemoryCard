@@ -1,75 +1,97 @@
-import Cards from "./Cards"
-import { useState, useCallback } from "react"
-import cardsData from "../data/cards"
+import { useState, useEffect, useRef } from "react";
+import { v4 as uuidv4 } from "uuid";
+import Cards from "./Cards";
+import LoseModal from "./LoseModal";
+import WinModal from "./WinModal";
+import { generateNewCards } from "./Generate";
+import cardsData from "../data/cards";
 
 export default function Game() {
+  const [cards, setCards] = useState(generateNewCards(cardsData));
+  const [currentScore, setCurrentScore] = useState(0);
+  const [bestScore, setBestScore] = useState(0);
+  const [isGameLost, setIsGameLost] = useState(false);
+  const [isGameWon, setIsGameWon] = useState(false);
+  const activeCards = cards.filter((card) => card.isActive);
+  const scoreRef = useRef(null);
+  const bestScoreRef = useRef(null);
+  const cardRef = useRef(null);
 
-    function getShuffledCards(targetCards) {
-        const copy = [...targetCards]
-        for (let i = copy.length - 1; i > 0; i -= 1) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [copy[i], copy[j]] = [copy[j], copy[i]];
-        }
+  const resetCards = () => {
+    setCards(generateNewCards(cardsData));
+  };
 
-        return copy;
+  useEffect(() => {
+    let timer;
+    if (currentScore !== 0) {
+      const scoreNode = scoreRef.current;
+      const cardNode = cardRef.current;
+      const newCardIds = cards.map((card) => ({ ...card, id: uuidv4() }));
+
+      scoreNode.classList.add("animate-scale-score");
+      cardNode.classList.add("hide");
+      setCards(newCardIds);
+      timer = setTimeout(() => {
+        scoreNode.classList.remove("animate-scale-score");
+        cardNode.classList.remove("hide");
+      }, 300);
     }
 
-    function getCardsClickedCount(targetCards) {
-        return targetCards.filter((card) => card.hasClicked).length;
+    return () => clearTimeout(timer);
+  }, [currentScore]);
+
+  useEffect(() => {
+    let timer;
+
+    if (currentScore > bestScore || isGameWon) {
+      const bestScoreNode = bestScoreRef.current;
+      bestScoreNode.classList.add("animate-scale-score");
+
+      timer = setTimeout(() => {
+        bestScoreNode.classList.remove("animate-scale-score");
+      }, 300);
     }
 
-    const generateNewCards = useCallback((targetCards) => {
-        const shuffledCards = getShuffledCards(targetCards)
-        const cardsToGenerate = getCardsClickedCount(targetCards) + 2
+    return () => clearTimeout(timer);
+  }, [bestScore]);
 
-        let i = 0
-        const newCards = shuffledCards.map((card) => {
-            if (!card.hasClicked && cardsToGenerate > i) {
-                i += 1
-                return { ...card, isCardInUse: true}
-            }
-            return card
-        })
-        return newCards
-    })
-
-    const [cards, setCards] = useState(generateNewCards(cardsData))
-    const cardsInUse = cards.filter((card) => card.isCardInUse)
-    const [currentScore, setCurrentScore] = useState(0)
-    const [bestScore, setBestScore] = useState(0)
-
-
-    const resetCards = () => {
-        setCards(generateNewCards(cardsData))
-    }
-
-    const isBestScore = () => currentScore > bestScore;
-
-    const incrementCurrentScore = () => setCurrentScore(currentScore + 1)
-    const updateBestScore = () => setBestScore(currentScore)
-
-    const resetGame = () => {
-        resetCards()
-        setCurrentScore(0)
-    }
-
-    
-
-    return (
-        <div>
-            <div className="score-container">
-                <div className="current-score">Current score: {currentScore}</div>
-                <div className="best-score">Best score: {bestScore}</div>
-            </div>
-            <Cards 
-            cards={cards}
-            cardsInUse={cardsInUse}
-            setCards={setCards}
-            resetGame={resetGame}
-            incrementCurrentScore={incrementCurrentScore}
-            updateBestScore={updateBestScore}
-            isBestScore={isBestScore}
-            />
+  return (
+    <div>
+      <div className="score-container">
+        <div className="current-score" ref={scoreRef}>
+          Current score: {currentScore}
         </div>
-    )
+        <div className="best-score" ref={bestScoreRef}>
+          Best score: {bestScore}
+        </div>
+      </div>
+
+      <Cards
+        cards={cards}
+        activeCards={activeCards}
+        currentScore={currentScore}
+        bestScore={bestScore}
+        setCards={setCards}
+        setBestScore={setBestScore}
+        generateNewCards={generateNewCards}
+        setIsGameLost={setIsGameLost}
+        setIsGameWon={setIsGameWon}
+        setCurrentScore={setCurrentScore}
+        ref={cardRef}
+      />
+
+      <LoseModal
+        setIsGameLost={setIsGameLost}
+        isGameLost={isGameLost}
+        resetCards={resetCards}
+      />
+
+      <WinModal
+        setIsGameWon={setIsGameWon}
+        isGameWon={isGameWon}
+        resetCards={resetCards}
+        setCurrentScore={setCurrentScore}
+      />
+    </div>
+  );
 }
