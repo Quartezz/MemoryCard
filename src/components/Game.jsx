@@ -32,12 +32,28 @@ export default function Game() {
         return newCards
     }
 
+    function setCardsClicked(targetCards, cardToUpdate) {
+        const updatedCards = targetCards.map((card) => {
+            if (card.id === cardToUpdate.id) {
+                return { ...cardToUpdate, hasClicked: true }
+            }
+
+            return card
+        })
+
+        setCards(updatedCards)
+    }
+
     const [cards, setCards] = useState(generateNewCards(cardsData))
     const cardsInUse = cards.filter((card) => card.isCardInUse)
 
     return (
         <div>
-            <Cards cards={cardsInUse}/>
+            <Cards 
+            cards={cards}
+            cardsInUse={cardsInUse}
+            setCardsClicked={setCardsClicked}
+            />
         </div>
     )
 }
