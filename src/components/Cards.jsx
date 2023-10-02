@@ -23,9 +23,11 @@ Cards.PropTypes = {
     setCardsClicked: PropTypes.func.isRequired,
     resetGame: PropTypes.func.isRequired,
     incrementCurrentScore: PropTypes.func.isRequired,
+    updateBestScore: PropTypes.func.isRequired,
+    isBestScore: PropTypes.func.isRequired,
 }
 
-export default function Cards({ cards, cardsInUse, setCardsClicked, incrementCurrentScore, resetGame }) {
+export default function Cards({ cards, cardsInUse, setCards, incrementCurrentScore, resetGame, updateBestScore, isBestScore, }) {
    
     return (
         <ul>
@@ -44,6 +46,10 @@ export default function Cards({ cards, cardsInUse, setCardsClicked, incrementCur
                             if (card.hasClicked) {
                                 alert("You lost!")
                                 resetGame()
+                            }
+
+                            if (isBestScore()) {
+                                updateBestScore()
                             }
                         }}
                             >
