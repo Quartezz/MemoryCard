@@ -1,8 +1,8 @@
 {
     "characters": [
-        { "name": "Ahri", "image": "Ahri.png" },
-        { "name": "Alistar", "image": "Alistar.png" },
-        { "name": "Dr.Mundo", "image": "Dr.Mundo.png" },
-        { "name": "Graves", "image": "Graves.png" }
+        { "name": "Ahri", "image": "ahri.png" },
+        { "name": "Master Yi", "image": "master.png" },
+        { "name": "Rengar", "image": "rengar.png" },
+        { "name": "Ziggs", "image": "ziggs.png" }
     ]
 }
