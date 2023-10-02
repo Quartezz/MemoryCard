@@ -1,3 +1,9 @@
+<p align="center">
+    <h1 align="center">Memory Card Game</h1>
+  </a>
+</p> 
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
