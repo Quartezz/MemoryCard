@@ -20,15 +20,48 @@ Cards.PropTypes = {
             id: PropTypes.string,
         })
     ).isRequired,
-    setCardsClicked: PropTypes.func.isRequired,
+    setCards: PropTypes.func.isRequired,
     resetGame: PropTypes.func.isRequired,
     incrementCurrentScore: PropTypes.func.isRequired,
     updateBestScore: PropTypes.func.isRequired,
     isBestScore: PropTypes.func.isRequired,
+    generateNewCards: PropTypes.func.isRequired,
 }
 
-export default function Cards({ cards, cardsInUse, setCards, incrementCurrentScore, resetGame, updateBestScore, isBestScore, }) {
-   
+export default function Cards({ cards, cardsInUse, setCards, incrementCurrentScore, resetGame, updateBestScore, isBestScore, generateNewCards }) {
+   const setCardsClicked = (targetCards, cardToUpdate) => {
+    const updatedCards = targetCards.map((card) => {
+        if (card.id === cardToUpdate.id) {
+            return { ...cardToUpdate, hasClicked: true }
+        }
+        return card
+    })
+    return updatedCards
+   }
+
+   const setAllCardsInUse = (targetCards) => {
+    const updatedCards = targetCards.map((card) => {
+        if (card.isCardInUse) {
+            return { ...card, isCardInUse: false }
+        }
+        return card
+    })
+    return updatedCards
+   }
+
+   const areAllCardsInUseClicked = (targetCards) => {
+    const cardsInUseFiltered = targetCards.filter((card) => card.isCardInUse)
+    return cardsInUseFiltered.every((card) => card.hasClicked)
+   }
+
+   function getShuffledCards(array) {
+    const copy = [...array]
+    for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1))
+        [copy[i], copy[j]] = [copy[j], copy[i]]
+    }
+    return copy
+   }
     return (
         <ul>
                 {cardsInUse.map((card) => (
@@ -38,8 +71,17 @@ export default function Cards({ cards, cardsInUse, setCards, incrementCurrentSco
                         className="card-button"
                         onClick={() => {
                             if (!card.hasClicked) {
-                                setCardsClicked(cards, card)
+                                const updatedCards = setCardsClicked(
+                                    getShuffledCards(cards),
+                                    card
+                                )
+                                setCards(() => updatedCards)
                                 incrementCurrentScore()
+                                console.log(updatedCards)
+                                if (areAllCardsInUseClicked(updatedCards)) {
+                                    console.log(true)
+                                    setCards(generateNewCards(setAllCardsInUse(updatedCards)))
+                                }
                                 return
                             }
 

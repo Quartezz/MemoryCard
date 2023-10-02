@@ -18,7 +18,7 @@ export default function Game() {
         return targetCards.filter((card) => card.hasClicked).length;
     }
 
-    function generateNewCards(targetCards) {
+    const generateNewCards = useCallback((targetCards) => {
         const shuffledCards = getShuffledCards(targetCards)
         const cardsToGenerate = getCardsClickedCount(targetCards) + 2
 
@@ -31,25 +31,13 @@ export default function Game() {
             return card
         })
         return newCards
-    }
+    })
 
     const [cards, setCards] = useState(generateNewCards(cardsData))
     const cardsInUse = cards.filter((card) => card.isCardInUse)
     const [currentScore, setCurrentScore] = useState(0)
     const [bestScore, setBestScore] = useState(0)
 
-    const setCardsClicked = useCallback(
-        (targetCards, cardToUpdate) => {
-            const updatedCards = targetCards.map((card) => {
-                if (card.id === cardToUpdate.id) {
-                    return { ...cardToUpdate, hasClicked: true }
-                }
-                return card
-            })
-            setCards(updatedCards)
-        },
-        [setCards]
-    )
 
     const resetCards = () => {
         setCards(generateNewCards(cardsData))
@@ -76,7 +64,7 @@ export default function Game() {
             <Cards 
             cards={cards}
             cardsInUse={cardsInUse}
-            setCardsClicked={setCardsClicked}
+            setCards={setCards}
             resetGame={resetGame}
             incrementCurrentScore={incrementCurrentScore}
             updateBestScore={updateBestScore}
