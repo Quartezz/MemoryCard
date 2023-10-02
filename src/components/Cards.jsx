@@ -20,10 +20,12 @@ Cards.PropTypes = {
             id: PropTypes.string,
         })
     ).isRequired,
-    setCardsClicked: PropTypes.func.isRequired
+    setCardsClicked: PropTypes.func.isRequired,
+    resetGame: PropTypes.func.isRequired,
+    incrementCurrentScore: PropTypes.func.isRequired,
 }
 
-export default function Cards({ cards, cardsInUse, setCardsClicked }) {
+export default function Cards({ cards, cardsInUse, setCardsClicked, incrementCurrentScore, resetGame }) {
    
     return (
         <ul>
@@ -33,8 +35,16 @@ export default function Cards({ cards, cardsInUse, setCardsClicked }) {
                         type="button"
                         className="card-button"
                         onClick={() => {
-                            setCardsClicked(cards, card)
-                            console.log("clicked!")
+                            if (!card.hasClicked) {
+                                setCardsClicked(cards, card)
+                                incrementCurrentScore()
+                                return
+                            }
+
+                            if (card.hasClicked) {
+                                alert("You lost!")
+                                resetGame()
+                            }
                         }}
                             >
                         <img 
