@@ -1,0 +1,8 @@
+{
+    "characters": [
+        { "name": "Ahri", "image": "Ahri.png" },
+        { "name": "Alistar", "image": "Alistar.png" },
+        { "name": "Dr.Mundo", "image": "Dr.Mundo.png" },
+        { "name": "Graves", "image": "Graves.png" }
+    ]
+}
