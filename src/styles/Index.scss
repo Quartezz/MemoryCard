@@ -1,18 +1,19 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-html, body {
-    min-height: 100%;
+html,
+body {
+  min-height: 100%;
 }
 
 body {
-    background-image: url("/background.jpg");
-    background-size: cover;
+  background-image: url("/background.jpg");
+  background-size: cover;
 }
 
 button {
-    cursor: pointer;
+  cursor: pointer;
 }
