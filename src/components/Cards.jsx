@@ -68,6 +68,7 @@ const Cards = forwardRef(
       }
 
       if (card.name === "Sion") {
+        audioRef.current.volume = 0.1;
         audioRef.current.play();
       }
 
