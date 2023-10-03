@@ -24,6 +24,8 @@ export default function StartModal() {
           The maximum score is 40.
           <br />
           Good luck!
+          <br />
+          PS: Be aware of Sion ulting.
         </p>
         <button onClick={closeModal} className="closeButton">
           Let's start!
