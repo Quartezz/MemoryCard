@@ -47,6 +47,17 @@ header {
 
 @media (max-width: 650px) {
   header {
-    gap: 10;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 500px) {
+  header h1,
+  header .nick {
+    font-size: small;
+  }
+
+  header img {
+    width: 100px;
   }
 }
