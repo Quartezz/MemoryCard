@@ -92,7 +92,7 @@ const Cards = forwardRef(
             >
               <img
                 className="character-image"
-                src={`/characters/${card.image}`}
+                src={`./characters/${card.image}`}
                 alt={card.name}
                 draggable="false"
               />
