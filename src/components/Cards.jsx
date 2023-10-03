@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import { forwardRef } from "react";
+import { forwardRef, useRef } from "react";
 import { getShuffledCards } from "./Generate";
 import "../styles/Cards.scss";
+import sionSound from "../sounds/Sion_Original_R_1.ogg";
 
 const Cards = forwardRef(
   (
@@ -19,6 +20,7 @@ const Cards = forwardRef(
     },
     ref
   ) => {
+    const audioRef = useRef(null);
     const getCardsClicked = (targetCards, cardToUpdate) => {
       const updatedCards = targetCards.map((card) => {
         if (card.id !== cardToUpdate.id) return card;
@@ -65,6 +67,10 @@ const Cards = forwardRef(
         return;
       }
 
+      if (card.name === "Sion") {
+        audioRef.current.play();
+      }
+
       const updatedCards = getCardsClicked(getShuffledCards(cards), card);
 
       if (areAllActiveCardsClicked(updatedCards)) {
@@ -100,6 +106,7 @@ const Cards = forwardRef(
             </button>
           </li>
         ))}
+        <audio src={sionSound} ref={audioRef}></audio>
       </ul>
     );
   }
